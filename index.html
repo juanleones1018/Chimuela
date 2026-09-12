@@ -320,11 +320,7 @@
             const ubicacion = encodeURIComponent(lugarSeleccionado);
             const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=20261009T190000/20261009T220000&details=${detalles}&location=${ubicacion}&add=juanleones1018@.com`;
             const icsContent = `BEGIN:VCALENDAR
-// Agrega tu correo en la URL de Google Calendar (&add=tu_correo@gmail.com)
-            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=20261009T190000/20261009T220000&details=${detalles}&location=${ubicacion}&add=juanleones1018@.com`;
-
-// Agrega tu correo dentro del archivo de Apple Calendar / iCal (ATTENDEE)
-            const icsContent = `BEGIN:VCALENDAR
+           
 VERSION:2.0
 PRODID:-//Nuestra Cita//ES
 BEGIN:VEVENT
