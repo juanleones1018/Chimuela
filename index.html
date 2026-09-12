@@ -34,10 +34,13 @@
             border: 1px solid #38587a;
         }
 
-        .emoji-header {
-            font-size: 3.5rem;
-            margin-bottom: 8px;
-            line-height: 1;
+        .header-gif {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         h1 {
@@ -207,20 +210,19 @@
 <body>
 
     <div class="card">
-        <!-- VISTA 1: Pregunta + Carrusel Horizontal -->
         <div id="main-section">
-            <div class="emoji-header">🐲🐉✨</div>
+            <img src="https://media.giphy.com/media/13m24aSRVMv6yA/giphy.gif" alt="Astrid volando" class="header-gif">
             <h1>¿Quieres salir conmigo este 9 de octubre, mi Chimuela? 🩶🩵</h1>
             <p>Desliza, elige a dónde vamos y presiona <b>¡SÍ!</b>:</p>
 
             <div class="places-carousel">
                 <label class="place-card selected" onclick="selectCard(this)">
                     <div class="place-icon">☕</div>
-                    <span class="place-name">El Correo y amada</span>
+                    <span class="place-name">El Correo y Yamada</span>
                     <a href="https://www.instagram.com/elcorreoyamada?stkn=dGtpcWQxNWgxNTJk" target="_blank" class="btn-menu" onclick="event.stopPropagation();">
                         📸 Ver Menú
                     </a>
-                    <input type="radio" name="place" value="El Correo y amada" class="radio-btn" checked>
+                    <input type="radio" name="place" value="El Correo y Yamada" class="radio-btn" checked>
                 </label>
 
                 <label class="place-card" onclick="selectCard(this)">
@@ -266,9 +268,8 @@
             </div>
         </div>
 
-        <!-- VISTA 2: Confirmación -->
         <div id="final-section" style="display: none;">
-            <div class="emoji-header">🎉🥳🥂</div>
+            <img src="https://media.giphy.com/media/26n6ZpGzZg0wV0o48/giphy.gif" alt="Hipo feliz" class="header-gif">
             <h1>¡Sabía que dirías que sí, Chimuela! 🎉🩶</h1>
             <p id="selected-text" style="font-size: 1.1rem; color: #1e3a8a; font-weight: bold; margin: 15px 0;"></p>
             <p>Agrégalo a tu calendario para que no se te olvide:</p>
@@ -286,6 +287,8 @@
         function selectCard(cardElement) {
             document.querySelectorAll('.place-card').forEach(c => c.classList.remove('selected'));
             cardElement.classList.add('selected');
+            const radio = cardElement.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
         }
 
         function escaparBotonNo(e) {
@@ -315,19 +318,24 @@
 
             document.getElementById('selected-text').innerText = `Nos vemos el 9 de octubre en: ${lugarSeleccionado} ✨`;
 
+            const miCorreo = "juanleones1018@gmail.com";
             const titulo = encodeURIComponent(`Cita con mi Chimuela en ${lugarSeleccionado} 🩶`);
             const detalles = encodeURIComponent(`Cita confirmada para el 9 de octubre con mi Chimuela en ${lugarSeleccionado}. ¡Nos vemos allá!`);
             const ubicacion = encodeURIComponent(lugarSeleccionado);
-            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=20261009T190000/20261009T220000&details=${detalles}&location=${ubicacion}&add=juanleones1018@gmail.com`;
+
+            // Generar enlace de Google Calendar
+            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=20261009T190000/20261009T220000&details=${detalles}&location=${ubicacion}&add=${encodeURIComponent(miCorreo)}`;
+            document.getElementById('google-cal-btn').href = gCalUrl;
+
+            // Generar archivo de Apple Calendar / iCal
             const icsContent = `BEGIN:VCALENDAR
-           
 VERSION:2.0
 PRODID:-//Nuestra Cita//ES
 BEGIN:VEVENT
 SUMMARY:Cita con mi Chimuela en ${lugarSeleccionado} 🩶
 DESCRIPTION:Cita confirmada para el 9 de octubre con mi Chimuela en ${lugarSeleccionado}.
 LOCATION:${lugarSeleccionado}
-ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=Mi Correo:mailto:tu_correo@gmail.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=Invitado:mailto:${miCorreo}
 DTSTART:20261009T190000
 DTEND:20261009T220000
 END:VEVENT
