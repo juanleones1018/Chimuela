@@ -36,7 +36,7 @@
 
         .header-gif {
             width: 100%;
-            max-height: 200px;
+            max-height: 220px;
             object-fit: cover;
             border-radius: 16px;
             margin-bottom: 15px;
@@ -210,6 +210,7 @@
 <body>
 
     <div class="card">
+        <!-- VISTA 1: Pregunta + GIF Volando + Carrusel Horizontal -->
         <div id="main-section">
             <img src="bienvenida.gif" alt="Astrid volando" class="header-gif">
             <h1>¿Quieres salir conmigo este 9 de octubre, mi Chimuela? 🩶🩵</h1>
@@ -222,7 +223,7 @@
                     <a href="https://www.instagram.com/elcorreoyamada?stkn=dGtpcWQxNWgxNTJk" target="_blank" class="btn-menu" onclick="event.stopPropagation();">
                         📸 Ver Menú
                     </a>
-                    <input type="radio" name="place" value="El Correo y amada" class="radio-btn" checked>
+                    <input type="radio" name="place" value="El Correo y Yamada" class="radio-btn" checked>
                 </label>
 
                 <label class="place-card" onclick="selectCard(this)">
@@ -268,15 +269,16 @@
             </div>
         </div>
 
+        <!-- VISTA 2: Confirmación con GIF de Hipo y Astrid -->
         <div id="final-section" style="display: none;">
-            <img src="confirmacion.gif" alt="Hipo feliz" class="header-gif">
-            <h1>¡Sabía que dirías que sí, Chimuela! 🎉🩶🩵</h1>
+            <img id="final-gif" src="confirmacion.gif" alt="Hipo y Astrid" class="header-gif">
+            <h1>¡Sabía que dirías que sí, Chimuela! 🎉🩶</h1>
             <p id="selected-text" style="font-size: 1.1rem; color: #1e3a8a; font-weight: bold; margin: 15px 0;"></p>
             <p>Agrégalo a tu calendario para que no se te olvide:</p>
 
             <div class="cal-buttons">
-                <a id="google-cal-btn" target="_blank" class="btn btn-google">Google Calendar 📅</a>
-                <a id="apple-cal-btn" class="btn btn-apple">Apple Calendar / iCal 🍏</a>
+                <a id="google-cal-btn" target="_blank" class="btn btn-google" onclick="cambiarAGifFinal()">Google Calendar 📅</a>
+                <a id="apple-cal-btn" class="btn btn-apple" onclick="cambiarAGifFinal()">Apple Calendar / iCal 🍏</a>
             </div>
         </div>
     </div>
@@ -306,6 +308,10 @@
             btnNo.style.top = `${randomY}px`;
         }
 
+        function cambiarAGifFinal() {
+            document.getElementById('final-gif').src = "final.gif";
+        }
+
         function confirmarCita() {
             const lugarRadio = document.querySelector('input[name="place"]:checked');
             const lugarSeleccionado = lugarRadio ? lugarRadio.value : "Lugar Especial";
@@ -323,11 +329,11 @@
             const detalles = encodeURIComponent(`Cita confirmada para el 9 de octubre con mi Chimuela en ${lugarSeleccionado}. ¡Nos vemos allá!`);
             const ubicacion = encodeURIComponent(lugarSeleccionado);
 
-            // Generar enlace de Google Calendar
+            // Google Calendar
             const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${titulo}&dates=20261009T190000/20261009T220000&details=${detalles}&location=${ubicacion}&add=${encodeURIComponent(miCorreo)}`;
             document.getElementById('google-cal-btn').href = gCalUrl;
 
-            // Generar archivo de Apple Calendar / iCal
+            // Apple Calendar / iCal
             const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Nuestra Cita//ES
